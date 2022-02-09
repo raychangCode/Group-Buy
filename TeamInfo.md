@@ -24,4 +24,5 @@
 | Video Link  |      link_to_video     |
 
 ## Project Summary
-Please put your project summary here
+
+It is inconvenient that people will encounter problems when shopping for a large number of items but they don’t actually need that amount. For example, when shopping at wholesale, the item usually includes the amount for a family to use for weeks or months. However, a student or a DINK family usually only needs half or one-third of the amount for the items. We are creating an application that can help people find the items they would like to buy and share with other families or students, to save more money and make shopping more accessible.
