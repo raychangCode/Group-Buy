@@ -1,4 +1,4 @@
-# TeamID-SampleProject
+# 005-GROUP BUY 
 
 ## Basic Information
 
@@ -19,7 +19,7 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-|  Title      |       ProjectTitle     |
+|  Title      |       GROUP BUY     |
 | System URL  |      link_to_system    |
 | Video Link  |      link_to_video     |
 
