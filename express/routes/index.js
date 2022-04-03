@@ -6,10 +6,7 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-    host: '34.123.145.94',
-    user: 'root', /* MySQL User */
-    password: 'msim707', /* MySQL Password */
-    database: 'db1' /* MySQL Database */
+
 });
 
 conn.connect();
@@ -51,26 +48,17 @@ app.get('/post/read', (req, res) => {
   conn.query(sqlquery, (err, result)=> {
     res.send(result);
   })
-
-
-  // conn.query(sqlquery, function(err, rows){
-  //   if (err) throw err
-  //   else {
-  //     res.json(rows);
-  //   }
-  // })
 });
 
 
 
-// app.delete('/delete/User/:id',(req, res) => {
-//   // let sqlQuery = "DELETE FROM User WHERE id="+req.params.id+"";
-//   let sqlQuery = "SELECT * FROM User WHERE userId="+req.params.id+"";  
-//   let query = conn.query(sqlQuery, (err, results) => {
-//     if(err) throw err;
-//       res.send(apiResponse(results));
-//   });
-// });
+app.delete('/post/delete/:postId',(req, res) => {
+  const id = req.params.postId
+  let sqlDelete = "DELETE FROM Post WHERE userId = ?";  
+  conn.query(sqlDelete, id, (err, result) => {
+    if (err) console.log(err)
+  })
+});
 
 
 

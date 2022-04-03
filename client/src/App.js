@@ -3,7 +3,7 @@ import React, { useState, useEffect  } from 'react';
 
 import './App.css';
 import Axios from 'axios';
-
+import Header from "./Header";
 
 function App() {
 const [postId, setPostId] = useState("");
@@ -37,9 +37,14 @@ const submitPost = () => {
   });
 };
 
+const deletePost = (postId) => {
+  Axios.post(`http://localhost:3001/post/delete/${postId}`);
+}
+
   return (
     <div className="App">
-      <h1>Posts</h1>
+      <Header />
+      {/* <h1>Posts</h1> */}
       <div className="form">
         {/* post id */}
         <label>Post Id:</label>
@@ -110,6 +115,14 @@ const submitPost = () => {
             <h1>Post Id: {val.postId}</h1> 
             <p>User Id: {val.userId}</p> 
             <p>Expiration Date: {val.expirationDate} </p>
+            <p>Group Limit: {val.groupLimit} </p>
+            <p>Payment Method: {val.paymentMethod} </p> 
+            <p>Category Id: {val.categoryId} </p>
+
+
+            <button onClick={() => {deletePost(val.postId)}}>Delete</button>
+            {/* <input type = "text" id = "updateInput"/>
+            <button>Update</button> */}
           </div>
           );
         })}
