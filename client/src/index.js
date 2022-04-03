@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Insert from './Insert';
-import SearchPost from './Components/search'
-
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SearchPost />
-    <Insert />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
