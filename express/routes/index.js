@@ -6,10 +6,10 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-    host: 'XXX',
-    user: 'XXX', /* MySQL User */
-    password: 'XXX', /* MySQL Password */
-    database: 'XXX' /* MySQL Database */
+    host: '34.123.145.94',
+    user: 'ken',
+    password: '123',
+    database: 'db1'
 });
 
 conn.connect();
@@ -27,7 +27,6 @@ app.listen(3001,() =>{
   console.log('Server started on port 3001...');
 });
 
-
 app.post('/post/insert', (req,res)=> {
 
   const postId = req.body.postId
@@ -40,7 +39,7 @@ app.post('/post/insert', (req,res)=> {
 
   let sqlInsert = 'INSERT INTO Post (postId, userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?,?)';
   conn.query(sqlInsert, [postId, userId, expirationDate, groupLimit, paymentMethod, categoryId], (err, result) => {
-    console.log(result);
+    // console.log(result);
     console.log(err);
   })
 });
@@ -53,16 +52,16 @@ app.get('/post/read', (req, res) => {
   })
 });
 
-
 app.post('/post/search', (req,res)=> {
-
   const productName = req.body.productName
-
   let pn = '%' + productName + '%'
-  let sqlSearch = "SELECT productName FROM Post NATURAL JOIN Product WHERE productName LIKE '"+pn+"'";
+  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '"+pn+"'";
   conn.query(sqlSearch, (err, result) => {
-    console.log(result);
-    console.log(err);
+    // console.log("SQL query:")
+    // console.log(sqlSearch)
+    // console.log(result)
+    res.send(result);
+    // console.log("error", err);
   })
 });
 
