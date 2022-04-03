@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import './search.css';
 
 function SearchPost() {
-    const [productName, setProductName] = useState("");
+  const [productName, setProductName] = useState("");
+  const [searchPostList, setSearchPostList] = useState([]);
 
-const searchPost = () => {
-    Axios.post('http://localhost:3001/post/search', {
+  useEffect(() => {
+    Axios.get('http://localhost:3001/post/search').then((response)=> {
+      console.log(response.data);
+      setSearchPostList(response.data)
+    });
+  });
+
+  const searchPost = () => {
+    Axios.post("http://localhost:3001/post/search/?s=" + productName, {
       productName: productName
     }).then(() => {
-      alert('successful search');
-    //   setpostList([...postList, {postId: postId, userId: userId, expirationDate: expirationDate}])
+      alert('successfully search');
+      setSearchPostList([...searchPostList, {productName: productName}])
     });
   };
 
@@ -31,6 +39,16 @@ const searchPost = () => {
         />
         <button onClick={searchPost}>Search</button>
         </form>
+
+        <div className="PostList">
+          {searchPostList.map((val)=> {
+              return (
+              <div className = "card">
+                <h1>Product name: {val.productName}</h1>
+              </div>
+              );
+          })}
+        </div>
     </div>
   )
 }
