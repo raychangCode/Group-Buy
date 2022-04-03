@@ -28,7 +28,7 @@ app.listen(3001,() =>{
 });
 
 
-app.post('/api/insert', (req,res)=> {
+app.post('/post/insert', (req,res)=> {
   
   const postId = req.body.postId
   const userId = req.body.userId
@@ -46,26 +46,31 @@ app.post('/api/insert', (req,res)=> {
 });
 
 
-app.get('/get/User', function(req, res, next) {
-  let sqlquery = 'SELECT * FROM User';
-  conn.query(sqlquery, function(err, rows){
-    if (err) throw err
-    else {
-      res.json(rows);
-    }
+app.get('/post/read', (req, res) => {
+  let sqlquery = 'SELECT * FROM Post LIMIT 10';
+  conn.query(sqlquery, (err, result)=> {
+    res.send(result);
   })
+
+
+  // conn.query(sqlquery, function(err, rows){
+  //   if (err) throw err
+  //   else {
+  //     res.json(rows);
+  //   }
+  // })
 });
 
 
 
-app.delete('/delete/User/:id',(req, res) => {
-  // let sqlQuery = "DELETE FROM User WHERE id="+req.params.id+"";
-  let sqlQuery = "SELECT * FROM User WHERE userId="+req.params.id+"";  
-  let query = conn.query(sqlQuery, (err, results) => {
-    if(err) throw err;
-      res.send(apiResponse(results));
-  });
-});
+// app.delete('/delete/User/:id',(req, res) => {
+//   // let sqlQuery = "DELETE FROM User WHERE id="+req.params.id+"";
+//   let sqlQuery = "SELECT * FROM User WHERE userId="+req.params.id+"";  
+//   let query = conn.query(sqlQuery, (err, results) => {
+//     if(err) throw err;
+//       res.send(apiResponse(results));
+//   });
+// });
 
 
 

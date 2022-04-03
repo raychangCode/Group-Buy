@@ -1,6 +1,6 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect  } from 'react';
 
-// , useEffect 
+
 import './App.css';
 import Axios from 'axios';
 
@@ -13,8 +13,18 @@ const [groupLimit, setgroupLimit] = useState("");
 const [paymentMethod, setpaymentMethod] = useState("");
 const [categoryId, setcategoryId] = useState("");
 
-const submitReview = () => {
-  Axios.post('http://localhost:3001/api/insert', {
+const [postList, setpostList] = useState([])
+
+useEffect(() => {
+  Axios.get('http://localhost:3001/post/read').then((response)=> {
+    setpostList(response.data)
+    console.log(response.data);
+  });
+
+});
+
+const submitPost = () => {
+  Axios.post('http://localhost:3001/post/insert', {
     postId: postId, 
     userId: userId,
     expirationDate: expirationDate, 
@@ -23,6 +33,7 @@ const submitReview = () => {
     categoryId: categoryId
   }).then(() => {
     alert('successful insert');
+    setpostList([...postList, {postId: postId, userId: userId, expirationDate: expirationDate}])
   });
 };
 
@@ -91,7 +102,17 @@ const submitReview = () => {
 
 
         
-        <button onClick={submitReview}>Submit</button>
+        <button onClick={submitPost}>Submit</button>
+
+        {postList.map((val)=> {
+          return (
+          <div className = "card">
+            <h1>Post Id: {val.postId}</h1> 
+            <p>User Id: {val.userId}</p> 
+            <p>Expiration Date: {val.expirationDate} </p>
+          </div>
+          );
+        })}
       </div>
     </div>
   );
