@@ -39,7 +39,6 @@ app.post('/post/insert', (req,res)=> {
 
   let sqlInsert = 'INSERT INTO Post (postId, userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?,?)';
   conn.query(sqlInsert, [postId, userId, expirationDate, groupLimit, paymentMethod, categoryId], (err, result) => {
-    // console.log(result);
     console.log(err);
   })
 });
@@ -55,20 +54,16 @@ app.get('/post/read', (req, res) => {
 app.post('/post/search', (req,res)=> {
   const productName = req.body.productName
   let pn = '%' + productName + '%'
-  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '"+pn+"'";
+  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '"+pn+"' LIMIT 10";
   conn.query(sqlSearch, (err, result) => {
-    // console.log("SQL query:")
-    // console.log(sqlSearch)
-    // console.log(result)
     res.send(result);
-    // console.log("error", err);
   })
 });
 
-app.delete('/post/delete/:postId',(req, res) => {
-  const id = req.params.postId
-  let sqlDelete = "DELETE FROM Post WHERE userId = ?";
-  conn.query(sqlDelete, id, (err, result) => {
+app.delete('/post/delete/:id',(req, res) => {
+  const deleteId = req.params.id
+  let sqlDelete = "DELETE FROM Post WHERE postId = ?";
+  conn.query(sqlDelete, deleteId, (err, result) => {
     if (err) console.log(err)
   })
 });
