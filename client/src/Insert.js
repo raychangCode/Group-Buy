@@ -30,13 +30,13 @@ const submitPost = () => {
     paymentMethod: paymentMethod,
     categoryId: categoryId
   }).then(() => {
-    alert('successful insert');
+    alert('successfully insert');
     setpostList([...postList, {postId: postId, userId: userId, expirationDate: expirationDate}])
   });
 };
 
-const deletePost = (postId) => {
-  Axios.post(`http://localhost:3001/post/delete/${postId}`);
+const deletePost = (id) => {
+  Axios.delete(`http://localhost:3001/post/delete/${id}`);
 }
 
   return (
