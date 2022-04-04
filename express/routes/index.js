@@ -44,6 +44,23 @@ app.post('/post/insert', (req,res)=> {
 });
 
 
+app.post('/post/update', (req,res)=> {
+
+  const postId = req.body.postId
+  const userId = req.body.userId
+  const expirationDate = req.body.expirationDate
+  const groupLimit = req.body.groupLimit
+  const paymentMethod = req.body.paymentMethod
+  const categoryId = req.body.categoryId
+
+
+  let sqlInsert = 'UPDATE Post SET  userId = ? , expirationDate = ? , groupLimit = ? , paymentMethod = ?, categoryId = ? WHERE postId = ?';
+  conn.query(sqlInsert, [userId, expirationDate, groupLimit, paymentMethod, categoryId, postId], (err, result) => {
+    console.log(err);
+  })
+});
+
+
 app.get('/post/read', (req, res) => {
   let sqlquery = 'SELECT * FROM Post LIMIT 10';
   conn.query(sqlquery, (err, result)=> {

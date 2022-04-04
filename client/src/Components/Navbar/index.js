@@ -13,12 +13,9 @@ return (
 		<NavLink to='/Components/search' activeStyle>
 			Search
 		</NavLink>
-		{/* <NavLink to="/blogs" activeStyle>
-			Blogs
+		<NavLink to="/Components/Update" activeStyle>
+			Update
 		</NavLink>
-		<NavLink to="/sign-up" activeStyle>
-			Sign Up
-		</NavLink> */}
 		</NavMenu>
 	</Nav>
 	</>

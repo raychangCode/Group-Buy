@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-import './Insert.css';
+
 import Axios from 'axios';
 
 
@@ -21,8 +21,8 @@ useEffect(() => {
 
 });
 
-const submitPost = () => {
-  Axios.post('http://localhost:3001/post/insert', {
+const updatePost = () => {
+  Axios.post('http://localhost:3001/post/update', {
     postId: postId,
     userId: userId,
     expirationDate: expirationDate,
@@ -30,7 +30,7 @@ const submitPost = () => {
     paymentMethod: paymentMethod,
     categoryId: categoryId
   }).then(() => {
-    alert('successfully insert');
+    alert('successfully update');
     setpostList([...postList, {postId: postId, userId: userId, expirationDate: expirationDate}])
   });
 };
@@ -41,7 +41,7 @@ const deletePost = (id) => {
 
   return (
     <div className="Insert">
-      <h1>Create Information</h1>
+      <h1>Update Information</h1>
       
       {/* <h1>Posts</h1> */}
       <div className="form">
@@ -104,7 +104,7 @@ const deletePost = (id) => {
         }}
         />
 
-        <button onClick={submitPost}>Submit</button>
+        <button onClick={updatePost}>Update</button>
 
         {postList.map((val)=> {
           return (
