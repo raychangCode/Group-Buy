@@ -9,8 +9,8 @@ function Update() {
   const [groupLimit, setGroupLimit] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
 
-  const updatePost = async () => {
-    const response = await Axios.post('http://localhost:3001/post/update', {
+  const updatePost = () => {
+    Axios.post('http://localhost:3001/post/update', {
       postId: postId,
       userId: userId,
       expirationDate: expirationDate,
@@ -18,9 +18,11 @@ function Update() {
       paymentMethod: paymentMethod
     });
 
-    if (response.data.length === 0) {
-      alert("No posts to edit!");
-    }
+    // if (response.data.length === 0) {
+    //   alert("No posts to edit!");
+    // }
+
+    window.location.reload();
   };
 
     return (

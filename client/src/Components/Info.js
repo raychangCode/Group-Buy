@@ -45,14 +45,17 @@ function Info() {
   	return (
     <div className="Info">
       	<br></br>
-      	<input placeholder="Search user name"
-        	type="text"
-        	name="s"
-        	onChange={(e) => {
-          	setUserName(e.target.value)
-        	}}
-      	/>
-      	<button onClick={searchUser}>Search</button>
+		<div class="search-wrap">
+			<input placeholder="Search user name"
+        		type="text"
+        		name="s"
+        		onChange={(e) => {
+        	  	setUserName(e.target.value)
+        		}}
+      		/>
+			<button onClick={searchUser}>Search</button>
+		</div>
+
 
       	<div className="UserInfoSearch">
         	<div class="card-container">
@@ -61,6 +64,7 @@ function Info() {
               		<div className="card">
 			    	<h5>User ID: {val.userId}</h5>
 			    	<h5>User name: {val.userName}</h5>
+					<h5>Post ID: {val.postId}</h5>
                 	<h5>Product name: {val.productName}</h5>
                 	<h5>Store Name: {val.storeName}</h5>
                 	<h5>Price: {val.price}</h5>
