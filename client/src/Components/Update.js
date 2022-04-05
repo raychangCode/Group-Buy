@@ -1,7 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-
 import Axios from 'axios';
-
 
 function Insert() {
 const [postId, setPostId] = useState("");
@@ -42,7 +40,7 @@ const deletePost = (id) => {
   return (
     <div className="Insert">
       <h1>Update Information</h1>
-      
+
       {/* <h1>Posts</h1> */}
       <div className="form">
         {/* post id */}
