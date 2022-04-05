@@ -6,10 +6,10 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-  host: 'xxxxxxxx',
-  user: 'xxx',
-  password: 'xxx',
-  database: 'xxx'
+  host: 'XX',
+  user: 'XXX',
+  password: 'XXX',
+  database: 'XXX'
 });
 
 conn.connect();
@@ -29,16 +29,22 @@ app.listen(3001, () => {
 
 app.post('/post/insert', (req, res) => {
 
-  const postId = req.body.postId
   const userId = req.body.userId
   const expirationDate = req.body.expirationDate
   const groupLimit = req.body.groupLimit
   const paymentMethod = req.body.paymentMethod
   const categoryId = req.body.categoryId
+  const productName = req.body.productName
+  const storeName = req.body.storeName
+  const price = req.body.price
+  const link = req.body.link
 
-
-  let sqlInsert = 'INSERT INTO Post (postId, userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?,?)';
-  conn.query(sqlInsert, [postId, userId, expirationDate, groupLimit, paymentMethod, categoryId], (err, result) => {
+  let sqlInsert = 'INSERT INTO Post (userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?)';
+  let sqlInsertProduct = 'INSERT INTO Product (productName, storeName, price, link) VALUE(?,?,?,?)';
+  conn.query(sqlInsert, [userId, expirationDate, groupLimit, paymentMethod, categoryId], (err, result) => {
+    console.log(err);
+  })
+  conn.query(sqlInsertProduct, [productName, storeName, price, link], (err, result) => {
     console.log(err);
   })
 });
@@ -62,8 +68,10 @@ app.post('/post/update', (req, res) => {
 
 
 app.get('/post/read', (req, res) => {
-  let sqlquery = 'SELECT * FROM Post LIMIT 10';
+  let sqlquery = 'SELECT * FROM Post NATURAL JOIN Product LIMIT 10';
   conn.query(sqlquery, (err, result) => {
+    console.log('result:')
+    console.log(result)
     res.send(result);
   })
 });
@@ -71,8 +79,10 @@ app.get('/post/read', (req, res) => {
 app.post('/post/search', (req, res) => {
   const productName = req.body.productName
   let pn = '%' + productName + '%'
-  let sqlSearch = "SELECT distinct productName FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
+  // let sqlSearch = "SELECT distinct productName FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
+  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
   conn.query(sqlSearch, (err, result) => {
+    console.log('result:',result)
     res.send(result);
   })
 });
