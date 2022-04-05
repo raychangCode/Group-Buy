@@ -64,7 +64,7 @@ app.post('/post/update', (req, res) => {
   const userId = req.body.userId
 
   let sqlUpdatePost = 'UPDATE Post SET expirationDate = ?, groupLimit = ?, paymentMethod = ? WHERE postId = ? AND userId = ?';
-  conn.query(sqlUpdatePost, [expirationDate, groupLimit, paymentMethod, postId], (err, result) => {
+  conn.query(sqlUpdatePost, [expirationDate, groupLimit, paymentMethod, postId, userId], (err, result) => {
     console.log(err);
   })
 });
