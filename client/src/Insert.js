@@ -4,128 +4,136 @@ import Axios from 'axios';
 
 
 function Insert() {
-const [postId, setPostId] = useState("");
-const [userId, setUserId] = useState("");
-const [expirationDate, setexpirationDate] = useState("");
-const [groupLimit, setgroupLimit] = useState("");
-const [paymentMethod, setpaymentMethod] = useState("");
-const [categoryId, setcategoryId] = useState("");
+  const [userId, setUserId] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
+  const [groupLimit, setGroupLimit] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [productName, setProductName] = useState("");
+  const [storeName, setStoreName] = useState("");
+  const [price, setPrice] = useState("");
+  const [link, setLink] = useState("");
 
-const [postList, setpostList] = useState([])
+  const submitPost = async () => {
+    await Axios.post('http://localhost:3001/post/insert', {
+      userId: userId,
+      expirationDate: expirationDate,
+      groupLimit: groupLimit,
+      paymentMethod: paymentMethod,
+      categoryId: categoryId,
+      productName: productName,
+      storeName: storeName,
+      price: price,
+      link: link
+    }).then(() => {
+      alert('successfully insert');
+    });
+  };
 
-useEffect(() => {
-  Axios.get('http://localhost:3001/post/read').then((response)=> {
-    setpostList(response.data)
-    console.log(response.data);
-  });
+  const deletePost = (id) => {
+    Axios.delete(`http://localhost:3001/post/delete/${id}`);
+  }
 
-});
+    return (
+      <div className="Insert">
+        <h1>Create Information</h1>
 
-const submitPost = () => {
-  Axios.post('http://localhost:3001/post/insert', {
-    postId: postId,
-    userId: userId,
-    expirationDate: expirationDate,
-    groupLimit: groupLimit,
-    paymentMethod: paymentMethod,
-    categoryId: categoryId
-  }).then(() => {
-    alert('successfully insert');
-    setpostList([...postList, {postId: postId, userId: userId, expirationDate: expirationDate}])
-  });
-};
+        {/* <h1>Posts</h1> */}
+        <div className="form">
+          {/* user id */}
+          <label>User Id:</label>
+          <input
+          type = "text"
+          name = "userId"
+          onChange={(e) => {
+            setUserId(e.target.value)
+          }}
+          />
 
-const deletePost = (id) => {
-  Axios.delete(`http://localhost:3001/post/delete/${id}`);
-}
+          {/* expirationDate */}
+          <label>Expiration Date:</label>
+          <input
+          type = "text"
+          name = "expirationDate"
+          onChange={(e) => {
+            setExpirationDate(e.target.value)
+          }}
+          />
 
-  return (
-    <div className="Insert">
-      <h1>Create Information</h1>
-      
-      {/* <h1>Posts</h1> */}
-      <div className="form">
-        {/* post id */}
-        <label>Post Id:</label>
-        <input
-        type = "text"
-        name = "postId"
-        onChange={(e) => {
-          setPostId(e.target.value);
-        }}
-        />
-        {/* user id */}
-        <label>User Id:</label>
-        <input
-        type = "text"
-        name = "userId"
-        onChange={(e) => {
-          setUserId(e.target.value)
-        }}
-        />
+          {/* groupLimit */}
+          <label>Group Limit:</label>
+          <input
+          type = "text"
+          name = "groupLimit"
+          onChange={(e) => {
+            setGroupLimit(e.target.value)
+          }}
+          />
 
-        {/* expirationDate */}
-        <label>Expiration Date:</label>
-        <input
-        type = "text"
-        name = "expirationDate"
-        onChange={(e) => {
-          setexpirationDate(e.target.value)
-        }}
-        />
+          {/* groupLimit */}
+          <label>Payment Method:</label>
+          <input
+          type = "text"
+          name = "paymentMethod"
+          onChange={(e) => {
+            setPaymentMethod(e.target.value)
+          }}
+          />
 
-        {/* groupLimit */}
-        <label>Group Limit:</label>
-        <input
-        type = "text"
-        name = "groupLimit"
-        onChange={(e) => {
-          setgroupLimit(e.target.value)
-        }}
-        />
+          {/* groupLimit */}
+          <label>Category Id:</label>
+          <input
+          type = "text"
+          name = "categoryId"
+          onChange={(e) => {
+            setCategoryId(e.target.value)
+          }}
+          />
 
-        {/* groupLimit */}
-        <label>Payment Method:</label>
-        <input
-        type = "text"
-        name = "paymentMethod"
-        onChange={(e) => {
-          setpaymentMethod(e.target.value)
-        }}
-        />
+          {/* post name */}
+          <label>Product Name:</label>
+          <input
+          type = "text"
+          name = "productName"
+          onChange={(e) => {
+            setProductName(e.target.value);
+          }}
+          />
 
-        {/* groupLimit */}
-        <label>Category Id:</label>
-        <input
-        type = "text"
-        name = "categoryId"
-        onChange={(e) => {
-          setcategoryId(e.target.value)
-        }}
-        />
+          {/* store name */}
+          <label>Store Name:</label>
+          <input
+          type = "text"
+          name = "storeName"
+          onChange={(e) => {
+            setStoreName(e.target.value);
+          }}
+          />
 
-        <button onClick={submitPost}>Submit</button>
+          {/* price */}
+          <label>Price:</label>
+          <input
+          type = "number"
+          name = "price"
+          onChange={(e) => {
+            setPrice(e.target.value);
+          }}
+          />
 
-        {postList.map((val)=> {
-          return (
-          <div className = "card">
-            <h1>Post Id: {val.postId}</h1>
-            <p>User Id: {val.userId}</p>
-            <p>Expiration Date: {val.expirationDate} </p>
-            <p>Group Limit: {val.groupLimit} </p>
-            <p>Payment Method: {val.paymentMethod} </p>
-            <p>Category Id: {val.categoryId} </p>
+          {/* link */}
+          <label>Link:</label>
+          <input
+          type = "text"
+          name = "link"
+          onChange={(e) => {
+            setLink(e.target.value);
+          }}
+          />
 
-
-            <button onClick={() => {deletePost(val.postId)}}>Delete</button>
-            {/* <input type = "text" id = "updateInput"/>
-            <button>Update</button> */}
-          </div>
-          );
-        })}
+          <button onClick={submitPost}>Submit</button>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default Insert;
