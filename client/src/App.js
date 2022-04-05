@@ -8,24 +8,37 @@ import { BrowserRouter as Router, Routes, Route }
 	from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Header from "./Header";
+import "./App.css";
 
 
 function App() {
 	return (
-
 		<Router>
-			<Header />
-			<Navbar />
-			<Routes>
-
-				<Route path='/Insert' element={<Insert />} />
-				<Route path='/Components/search' element={<SearchPost />} />
-				<Route path='/Components/Info' element={<Info />} />
-				<Route path='/Components/Update' element={<Update />} />
-				<Route path='/Components/Analysis' element={<Analysis />} />
-			</Routes>
+			<div class="page-container">
+				<div class="content-wrap">
+					<Header />
+					<Navbar />
+					<Routes>
+						<Route path='/Insert' element={<Insert />} />
+						<Route path='/Components/search' element={<SearchPost />} />
+						<Route path='/Components/Info' element={<Info />} />
+						<Route path='/Components/Update' element={<Update />} />
+						<Route path='/Components/Analysis' element={<Analysis />} />
+					</Routes>
+				</div>
+			</div>
+			<footer>
+				<div class="footer">
+					<br></br>
+					<br></br>
+					<p>Author: <a href='https://www.linkedin.com/in/shwu02/' target="_blank" rel="noopener noreferrer">Ken Wu</a>,
+					<a href='https://www.linkedin.com/in/jui-ting-ray-chang/' target="_blank" rel="noopener noreferrer">Ray Chang</a>,
+					<a href='https://www.linkedin.com/in/thomas-yenshuo-huang/' target="_blank" rel="noopener noreferrer">Thomas Huang</a>,
+					<a href='https://www.linkedin.com/in/meg-chia-chien-wu/' target="_blank" rel="noopener noreferrer">Meg Wu</a></p>
+					<p><a href="https://illinois.edu/" target="_blank" rel="noopener noreferrer">University of Illinois Urbana-Champaign</a></p>
+				</div>
+			</footer>
 		</Router>
-
 	);
 }
 
