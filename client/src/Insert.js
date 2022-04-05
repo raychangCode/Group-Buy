@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState} from 'react';
 import './Insert.css';
 import Axios from 'axios';
 
@@ -14,8 +14,8 @@ function Insert() {
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
 
-  const submitPost = async () => {
-    await Axios.post('http://localhost:3001/post/insert', {
+  const submitPost = () => {
+    Axios.post('http://localhost:3001/post/insert', {
       userId: userId,
       expirationDate: expirationDate,
       groupLimit: groupLimit,
@@ -25,14 +25,11 @@ function Insert() {
       storeName: storeName,
       price: price,
       link: link
-    }).then(() => {
-      alert('successfully insert');
     });
-  };
 
-  const deletePost = (id) => {
-    Axios.delete(`http://localhost:3001/post/delete/${id}`);
-  }
+    window.location.reload();
+
+  };
 
     return (
       <div className="Insert">
@@ -63,14 +60,14 @@ function Insert() {
           {/* groupLimit */}
           <label>Group Limit:</label>
           <input
-          type = "text"
+          type = "number"
           name = "groupLimit"
           onChange={(e) => {
             setGroupLimit(e.target.value)
           }}
           />
 
-          {/* groupLimit */}
+          {/* Payment Method */}
           <label>Payment Method:</label>
           <input
           type = "text"
@@ -80,17 +77,17 @@ function Insert() {
           }}
           />
 
-          {/* groupLimit */}
+          {/* Category ID */}
           <label>Category Id:</label>
           <input
-          type = "text"
+          type = "number"
           name = "categoryId"
           onChange={(e) => {
             setCategoryId(e.target.value)
           }}
           />
 
-          {/* post name */}
+          {/* Product Name */}
           <label>Product Name:</label>
           <input
           type = "text"
