@@ -8,13 +8,13 @@ const Navbar = () => {
 			<Nav>
 				<NavMenu>
 					<NavLink to="/Insert" activeStyle>
-						Insert
+						Post
 					</NavLink>
 					<NavLink to='/Components/search' activeStyle>
 						Search
 					</NavLink>
 					<NavLink to="/Components/Update" activeStyle>
-						Update
+						Edit
 					</NavLink>
 					<NavLink to="/Components/Analysis" activeStyle>
 						Analysis
