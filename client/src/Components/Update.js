@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
+import './Update.css';
 
 function Update() {
   const [postId, setPostId] = useState("");
