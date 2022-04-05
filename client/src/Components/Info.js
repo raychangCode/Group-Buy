@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Axios from 'axios';
-import './search.css';
 
-function SearchPost() {
+function Info() {
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [postId, setPostId] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [groupLimit, setGroupLimit] = useState("");
@@ -11,11 +12,13 @@ function SearchPost() {
   const [storeName, setStoreName] = useState("");
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
-  const [searchPostList, setSearchPostList] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
 
 
-  const searchPost = async () => {
-    const response = await Axios.post("http://localhost:3001/post/search/?s=" + productName, {
+  const searchUser = async () => {
+    const response = await Axios.post("http://localhost:3001/post/search-user/?s=" + userName, {
+	    userId: userId,
+	    userName: userName,
       postId: postId,
       expirationDate: expirationDate,
       groupLimit: groupLimit,
@@ -25,7 +28,7 @@ function SearchPost() {
       price: price,
       link: link
     });
-    setSearchPostList(response.data)
+    setUserInfo(response.data)
 
     if (response.data.length === 0) {
       alert("No results!");
@@ -39,20 +42,22 @@ function SearchPost() {
   };
 
   return (
-    <div className="SearchPost">
-      <input placeholder="Search product name"
+    <div className="Info">
+      <input placeholder="Search user name"
         type="text"
         name="s"
         onChange={(e) => {
-          setProductName(e.target.value)
+          setUserName(e.target.value)
         }}
       />
-      <button onClick={searchPost}>Search</button>
+      <button onClick={searchUser}>Search</button>
 
-      <div className="PostListSearch">
-        {searchPostList.map((val) => {
+      <div className="UserInfoSearch">
+        {userInfo.map((val) => {
           return (
             <div className="card">
+			        <h5>User ID: {val.userId}</h5>
+			        <h5>User name: {val.userName}</h5>
               <h5>Product name: {val.productName}</h5>
               <h5>Store Name: {val.storeName}</h5>
               <h5>Price: {val.price}</h5>
@@ -70,4 +75,4 @@ function SearchPost() {
 }
 
 
-export default SearchPost;
+export default Info;
