@@ -28,7 +28,6 @@ function Insert() {
     });
 
     window.location.reload();
-
   };
 
     return (
