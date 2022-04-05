@@ -90,7 +90,7 @@ app.post('/post/search', (req, res) => {
 app.post('/post/search-user', (req, res) => {
   const userName = req.body.userName
   let pn = '%' + userName + '%'
-  let sqlSearch = "SELECT * FROM User JOIN Post USING (userId) WHERE userName LIKE '" + pn + "' ORDER BY postId";
+  let sqlSearch = "SELECT * FROM User JOIN Post USING (userId) JOIN Product USING (postId) WHERE userName LIKE '" + pn + "' ORDER BY postId";
   conn.query(sqlSearch, (err, result) => {
     console.log('result:', result)
     res.send(result);
