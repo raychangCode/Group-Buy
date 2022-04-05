@@ -33,7 +33,7 @@ function Insert() {
 
     return (
       <div className="Insert">
-        <h1>Create Information</h1>
+        <h1>Create Post</h1>
 
         {/* <h1>Posts</h1> */}
         <div className="form">
@@ -128,6 +128,8 @@ function Insert() {
           />
 
           <button onClick={submitPost}>Submit</button>
+          <br></br>
+          <br></br>
         </div>
       </div>
     );
