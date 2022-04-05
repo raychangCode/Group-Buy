@@ -6,28 +6,28 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-    host: '34.123.145.94',
-    user: 'ken',
-    password: '123',
-    database: 'db1'
+  host: 'xxxxxxxx',
+  user: 'xxx',
+  password: 'xxx',
+  database: 'xxx'
 });
 
 conn.connect();
 
 app.use(cors());
 app.use(express.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 /* GET home page. */
 app.get('/', (req, res) => {
   res.send("Demo Website for GroupBuy Application");
 });
 
-app.listen(3001,() =>{
+app.listen(3001, () => {
   console.log('Server started on port 3001...');
 });
 
-app.post('/post/insert', (req,res)=> {
+app.post('/post/insert', (req, res) => {
 
   const postId = req.body.postId
   const userId = req.body.userId
@@ -44,7 +44,7 @@ app.post('/post/insert', (req,res)=> {
 });
 
 
-app.post('/post/update', (req,res)=> {
+app.post('/post/update', (req, res) => {
 
   const postId = req.body.postId
   const userId = req.body.userId
@@ -63,21 +63,52 @@ app.post('/post/update', (req,res)=> {
 
 app.get('/post/read', (req, res) => {
   let sqlquery = 'SELECT * FROM Post LIMIT 10';
-  conn.query(sqlquery, (err, result)=> {
+  conn.query(sqlquery, (err, result) => {
     res.send(result);
   })
 });
 
-app.post('/post/search', (req,res)=> {
+app.post('/post/search', (req, res) => {
   const productName = req.body.productName
   let pn = '%' + productName + '%'
-  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '"+pn+"' LIMIT 10";
+  let sqlSearch = "SELECT distinct productName FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
   conn.query(sqlSearch, (err, result) => {
     res.send(result);
   })
 });
 
-app.delete('/post/delete/:id',(req, res) => {
+// adv query
+app.post('/post/advsearch1', (req, res) => {
+  console.log('adv search')
+  let sqlSearch = "SELECT userId, userName, COUNT(postId) as numOfPost\
+                   FROM User JOIN Post USING (userId)\
+                   WHERE expirationDate < ('2022-01-01') AND userName LIKE '%en%'\
+                   GROUP BY userId order by numOfPost desc LIMIT 15;";
+  conn.query(sqlSearch, (err, result) => {
+    console.log(result)
+    res.send(result);
+  })
+});
+
+app.post('/post/advsearch2', (req, res) => {
+  console.log('adv search')
+  let sqlSearch = "(SELECT c.categoryId, c.categoryName, COUNT(postId) as NumberOfPost\
+                    FROM Post p NATURAL JOIN Category c\
+                    WHERE p.userId > 500 AND c.categoryName='Meat'\
+                    GROUP BY c.categoryId)\
+                    UNION\
+                    (SELECT c.categoryId, c.categoryName, COUNT(postId) as NumberOfPost\
+                    FROM Post p NATURAL JOIN Category c\
+                    WHERE p.userId < 100 AND  c.categoryName='Bakery'\
+                    GROUP BY c.categoryId );";
+  conn.query(sqlSearch, (err, result) => {
+    console.log(result)
+    res.send(result);
+  })
+
+});
+
+app.delete('/post/delete/:id', (req, res) => {
   const deleteId = req.params.id
   let sqlDelete = "DELETE FROM Post WHERE postId = ?";
   conn.query(sqlDelete, deleteId, (err, result) => {
