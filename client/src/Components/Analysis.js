@@ -3,7 +3,8 @@ import Axios from 'axios';
 import './search.css';
 
 function Analysis() {
-  const [searchPostList, setSearchPostList] = useState([]);
+  const [searchPostList1, setSearchPostList1] = useState([]);
+  const [searchPostList2, setSearchPostList2] = useState([]);
   const [userName, setPostId] = useState("");
   const [userId, setUserId] = useState("");
   const [numOfPost, setnumOfPost] = useState("");
@@ -17,7 +18,10 @@ function Analysis() {
       userName: userName,
       numOfPost: numOfPost
     });
-    setSearchPostList(response.data)
+    setSearchPostList1(response.data)
+    document.getElementById('adv1').style.visibility = 'visible';
+    document.getElementById('adv2').style.visibility = 'hidden';
+    setSearchPostList2([])
   };
 
   const AdvSearch2 = async () => {
@@ -26,7 +30,10 @@ function Analysis() {
       categoryName: categoryName,
       NumberOfPost: NumberOfPost
     });
-    setSearchPostList(response.data)
+    setSearchPostList2(response.data)
+    document.getElementById('adv2').style.visibility = 'visible';
+    document.getElementById('adv1').style.visibility = 'hidden';
+    setSearchPostList1([])
   };
 
   return (
@@ -37,12 +44,12 @@ function Analysis() {
       </div>
 
       <div>
-        <label>Adv search: </label>
+        <label>Number of posts in Meat category with userID greater than 800 and Bakery category with userID less than 200 : </label>
         <button onClick={AdvSearch2}>Search</button>
       </div>
 
-      <div className="PostListSearch">
-        {searchPostList.map((val) => {
+      <div className="PostListSearch" id="adv1">
+        {searchPostList1.map((val) => {
           return (
             <div className="card">
               <h1>User ID: {val.userId}</h1>
@@ -52,8 +59,8 @@ function Analysis() {
           );
         })}
       </div>
-      <div className="PostListAdv1">
-        {searchPostList.map((val) => {
+      <div className="PostListAdv1" id='adv2'>
+        {searchPostList2.map((val) => {
           return (
             <div className="card">
               <h1>categoryId: {val.categoryId}</h1>

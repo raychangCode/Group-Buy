@@ -6,10 +6,10 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-  host: 'XXX',
-  user: 'XXX',
-  password: 'XXX',
-  database: 'XXX'
+  host: '34.123.145.94',
+  user: 'ken',
+  password: '123',
+  database: 'db1'
 });
 
 conn.connect();
@@ -82,7 +82,7 @@ app.post('/post/search', (req, res) => {
   let pn = '%' + productName + '%'
   let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
   conn.query(sqlSearch, (err, result) => {
-    console.log('result:',result)
+    console.log('result:', result)
     res.send(result);
   })
 });
@@ -92,7 +92,7 @@ app.post('/post/search-user', (req, res) => {
   let pn = '%' + userName + '%'
   let sqlSearch = "SELECT * FROM User JOIN Post USING (userId) WHERE userName LIKE '" + pn + "' ORDER BY postId";
   conn.query(sqlSearch, (err, result) => {
-    console.log('result:',result)
+    console.log('result:', result)
     res.send(result);
   })
 });
@@ -114,12 +114,12 @@ app.post('/post/advsearch2', (req, res) => {
   console.log('adv search')
   let sqlSearch = "(SELECT c.categoryId, c.categoryName, COUNT(postId) as NumberOfPost\
                     FROM Post p NATURAL JOIN Category c\
-                    WHERE p.userId > 500 AND c.categoryName='Meat'\
+                    WHERE p.userId > 800 and c.categoryName='Meat'\
                     GROUP BY c.categoryId)\
                     UNION\
                     (SELECT c.categoryId, c.categoryName, COUNT(postId) as NumberOfPost\
                     FROM Post p NATURAL JOIN Category c\
-                    WHERE p.userId < 100 AND  c.categoryName='Bakery'\
+                    WHERE p.userId < 200 AND  c.categoryName='Bakery'\
                     GROUP BY c.categoryId );";
   conn.query(sqlSearch, (err, result) => {
     // console.log(result)
