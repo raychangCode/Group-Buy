@@ -6,7 +6,7 @@ var app = express()
 var mysql = require('mysql2');
 
 const conn = mysql.createConnection({
-  host: 'XX',
+  host: 'XXX',
   user: 'XXX',
   password: 'XXX',
   database: 'XXX'
@@ -39,29 +39,32 @@ app.post('/post/insert', (req, res) => {
   const price = req.body.price
   const link = req.body.link
 
-  let sqlInsert = 'INSERT INTO Post (userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?)';
-  let sqlInsertProduct = 'INSERT INTO Product (productName, storeName, price, link) VALUE(?,?,?,?)';
+  let sqlInsert = 'INSERT INTO Post (userId, expirationDate, groupLimit, paymentMethod, categoryId) VALUE(?,?,?,?,?);';
   conn.query(sqlInsert, [userId, expirationDate, groupLimit, paymentMethod, categoryId], (err, result) => {
     console.log(err);
   })
-  conn.query(sqlInsertProduct, [productName, storeName, price, link], (err, result) => {
-    console.log(err);
+
+  let sqlGetPostId = 'SELECT postId FROM Post WHERE userId = ' + userId + ' ORDER BY postId DESC LIMIT 1;';
+  conn.query(sqlGetPostId, (err, result) => {
+    let postIdRes = result;
+    // console.log('----------------------------')
+    // console.log(postIdRes);
+    let sqlInsertProduct = "INSERT INTO Product (productName, storeName, price, link, postId) VALUE(?,?,?,?," + postIdRes[0].postId + ");";
+    conn.query(sqlInsertProduct, [productName, storeName, price, link], (err, result) => {
+      console.log(err);
+    })
   })
 });
 
-
 app.post('/post/update', (req, res) => {
-
   const postId = req.body.postId
-  const userId = req.body.userId
   const expirationDate = req.body.expirationDate
   const groupLimit = req.body.groupLimit
   const paymentMethod = req.body.paymentMethod
-  const categoryId = req.body.categoryId
+  const userId = req.body.userId
 
-
-  let sqlInsert = 'UPDATE Post SET  userId = ? , expirationDate = ? , groupLimit = ? , paymentMethod = ?, categoryId = ? WHERE postId = ?';
-  conn.query(sqlInsert, [userId, expirationDate, groupLimit, paymentMethod, categoryId, postId], (err, result) => {
+  let sqlUpdatePost = 'UPDATE Post SET expirationDate = ?, groupLimit = ?, paymentMethod = ? WHERE postId = ? AND userId = ?';
+  conn.query(sqlUpdatePost, [expirationDate, groupLimit, paymentMethod, postId], (err, result) => {
     console.log(err);
   })
 });
@@ -70,8 +73,6 @@ app.post('/post/update', (req, res) => {
 app.get('/post/read', (req, res) => {
   let sqlquery = 'SELECT * FROM Post NATURAL JOIN Product LIMIT 10';
   conn.query(sqlquery, (err, result) => {
-    console.log('result:')
-    console.log(result)
     res.send(result);
   })
 });
@@ -79,8 +80,17 @@ app.get('/post/read', (req, res) => {
 app.post('/post/search', (req, res) => {
   const productName = req.body.productName
   let pn = '%' + productName + '%'
-  // let sqlSearch = "SELECT distinct productName FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
   let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE productName LIKE '" + pn + "' order by productName LIMIT 10";
+  conn.query(sqlSearch, (err, result) => {
+    console.log('result:',result)
+    res.send(result);
+  })
+});
+
+app.post('/post/search-user', (req, res) => {
+  const userName = req.body.userName
+  let pn = '%' + userName + '%'
+  let sqlSearch = "SELECT * FROM User JOIN Post USING (userId) WHERE userName LIKE '" + pn + "' ORDER BY postId";
   conn.query(sqlSearch, (err, result) => {
     console.log('result:',result)
     res.send(result);
@@ -95,7 +105,7 @@ app.post('/post/advsearch1', (req, res) => {
                    WHERE expirationDate < ('2022-01-01') AND userName LIKE '%en%'\
                    GROUP BY userId order by numOfPost desc LIMIT 15;";
   conn.query(sqlSearch, (err, result) => {
-    console.log(result)
+    // console.log(result)
     res.send(result);
   })
 });
@@ -112,7 +122,7 @@ app.post('/post/advsearch2', (req, res) => {
                     WHERE p.userId < 100 AND  c.categoryName='Bakery'\
                     GROUP BY c.categoryId );";
   conn.query(sqlSearch, (err, result) => {
-    console.log(result)
+    // console.log(result)
     res.send(result);
   })
 
@@ -120,11 +130,14 @@ app.post('/post/advsearch2', (req, res) => {
 
 app.delete('/post/delete/:id', (req, res) => {
   const deleteId = req.params.id
-  let sqlDelete = "DELETE FROM Post WHERE postId = ?";
-  conn.query(sqlDelete, deleteId, (err, result) => {
+  let sqlDeletePost = "DELETE FROM Post WHERE postId = ?";
+  let sqlDeleteProduct = "DELETE FROM Product WHERE postId = ?";
+  conn.query(sqlDeletePost, deleteId, (err, result) => {
+    if (err) console.log(err)
+  })
+  conn.query(sqlDeleteProduct, deleteId, (err, result) => {
     if (err) console.log(err)
   })
 });
-
 
 module.exports = router;
