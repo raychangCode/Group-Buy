@@ -13,6 +13,9 @@ const Navbar = () => {
 					<NavLink to='/Components/search' activeStyle>
 						Search
 					</NavLink>
+					<NavLink to="/Components/Info" activeStyle>
+						Personal Info
+					</NavLink>
 					<NavLink to="/Components/Update" activeStyle>
 						Edit
 					</NavLink>
