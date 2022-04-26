@@ -1,0 +1,46 @@
+#video {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: -1;
+}
+
+.hero {
+	height: 100vh;
+	width: 100%;
+	object-fit: contain;
+}
+
+.hero content {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen';
+	text-align: center;
+	position: absolute;
+	margin: auto;
+	width: 100%;
+	height: 100%;
+	top: 40vh;
+}
+
+.hero .content h1 {
+	text-align: center;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen';
+	font-size: 4rem;
+	color: #fff;
+}
+
+.hero .content h3 {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen';
+	text-align: center;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	margin-bottom: 8rem;
+	color: #fff;
+}
+
+.hero .btn {
+	text-align: center;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen';
+	font-size: 2rem;
+	color: #fff;
+}
