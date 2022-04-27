@@ -8,6 +8,7 @@ import Navbar from './Components/Navbar';
 import Header from "./Header";
 import Home from "./Components/Page/Home"
 import "./App.css";
+import Post from './Components/Post';
 
 import { BrowserRouter as Router, Routes, Route}
 	from 'react-router-dom';
@@ -27,6 +28,7 @@ function App() {
 						<Route path='/Components/Info' element={<Info />} />
 						<Route path='/Components/Update' element={<Update />} />
 						<Route path='/Components/Analysis' element={<Analysis />} />
+						<Route exact path='/Components/Post/:id' element={<Post />} />
 					</Routes>
 
 				</div>
