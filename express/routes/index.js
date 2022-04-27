@@ -24,17 +24,33 @@ app.get('/', (req, res) => {
   res.send("Demo Website for GroupBuy Application");
 });
 
+//GET Post Info
 app.get('/post/:id', (req, res) => {
   const id = req.params.id
   // console.log(req)
-  let sqlSearch = "SELECT * FROM Post NATURAL JOIN Product WHERE postId="+ id + ";";
+  let sqlSearch = "SELECT * \
+                   FROM Post LEFT JOIN Product USING (postId) LEFT JOIN User USING(userId)\
+                   WHERE postId="+ id + ";";
+
   conn.query(sqlSearch, (err, result) => {
     console.log('result:', result,err,id)
     res.send(result);
   })
 });
 
+// GET Post's Group Info 
+app.get('/post/group/:id', (req, res) => {
+  const id = req.params.id
+  console.log('PostInfo')
+  let sql= "SELECT userName\
+            FROM UserPost up LEFT JOIN User USING (userId)\
+            WHERE up.postId=" + id + ";";
+  conn.query(sql, (err, result) => {
+    console.log('result:', result,err,id)
+    res.send(result);
+  })
 
+});
 
 app.listen(3001, () => {
   console.log('Server started on port 3001...');
@@ -144,44 +160,32 @@ app.post('/post/advsearch2', (req, res) => {
 
 
 //GET Post Info 
-app.post('/post/info/:id', (req, res) => {
-  console.log('PostInfo')
-  let sql= "SELECT userId, up.postId, productId\
-            FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Post USING (postId)\
-            WHERE up.postId = id; "
-  conn.query(sql, (err, result) => {
-    res.send(result);
-  })
+// app.post('/post/info/:id', (req, res) => {
+//   console.log('PostInfo')
+//   let sql= "SELECT userId, up.postId, productId\
+//             FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Post USING (postId)\
+//             WHERE up.postId = id; "
+//   conn.query(sql, (err, result) => {
+//     res.send(result);
+//   })
 
-});
+// });
 
 
 //GET Post's product information
-app.get('/post/product/:id', (req, res) => {
-  console.log('PostProductInfo')
-  let sql= "SELECT userId, up.postId, productId, productName\
-            FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Product USING (productId)\
-            WHERE up.postId = id; "
-  conn.query(sql, (err, result) => {
-    res.send(result);
-  })
+// app.get('/post/product/:id', (req, res) => {
+//   console.log('PostProductInfo')
+//   let sql= "SELECT userId, up.postId, productId, productName\
+//             FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Product USING (productId)\
+//             WHERE up.postId = id; "
+//   conn.query(sql, (err, result) => {
+//     res.send(result);
+//   })
 
-});
-
-
+// });
 
 
-// GET Post's Group Info 
-app.get('/post/group/:id', (req, res) => {
-  console.log('PostInfo')
-  let sql= "SELECT userName\
-            FROM UserPost up LEFT JOIN User USING (userId)\
-            WHERE up.postId = id; "
-  conn.query(sql, (err, result) => {
-    res.send(result);
-  })
 
-});
             
 
 
