@@ -30,7 +30,7 @@ function UserAnalysis(){
 				<div class="card-container">
 					{analysisList.map((val) => {
 						return (
-							<div className="card2">
+							<div className="card4">
 								<h3>User ID: {val.userId}</h3>
 								<h3>Most Frequent Category: {val.MostFreCategory}</h3>
 								<h3>User Engagement: {val.userEngagement}</h3>
