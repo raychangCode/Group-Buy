@@ -37,7 +37,7 @@ app.get('/post/:id', (req, res) => {
                    WHERE postId="+ id + ";";
 
   conn.query(sqlSearch, (err, result) => {
-    console.log('result:', result,err,id)
+    console.log('result:', result, err, id)
     res.send(result);
   })
 });
@@ -46,11 +46,11 @@ app.get('/post/:id', (req, res) => {
 app.get('/post/group/:id', (req, res) => {
   const id = req.params.id
   console.log('PostInfo')
-  let sql= "SELECT userName\
+  let sql = "SELECT userName\
             FROM UserPost up LEFT JOIN User USING (userId)\
             WHERE up.postId=" + id + ";";
   conn.query(sql, (err, result) => {
-    console.log('result:', result,err,id)
+    console.log('result:', result, err, id)
     res.send(result);
   })
 });
@@ -123,6 +123,39 @@ app.post('/post/search-user', (req, res) => {
     console.log('result:', result)
     res.send(result);
   })
+});
+
+// login function
+app.use('/login', (req, res) => {
+  const authUser = req.body.username
+  const authpw = req.body.password
+  let sqlSearch = "SELECT password FROM User WHERE userName = '" + authUser + "'";
+  conn.query(sqlSearch, (err, result) => {
+    if (result[0].password === authpw) {
+      res.send({
+        token: 'test123'
+      });
+    }
+    else {
+      console.log('Something wrong with login credentials')
+    }
+  })
+
+});
+
+// register function, need to put sql trigger later
+app.post('/post/register', (req, res) => {
+  console.log('this is register')
+  const username = req.body.regusername
+  const password = req.body.regpassword
+  const email = req.body.email
+  const phoneNumber = req.body.phoneNumber
+
+  let sqlInsert = 'INSERT INTO User (username, password, email, phoneNumber) VALUE(?,?,?,?);';
+  conn.query(sqlInsert, [username, password, email, phoneNumber], (err, result) => {
+    res.send(result)
+  })
+
 });
 
 // adv query
