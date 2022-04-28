@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var app = express()
 var mysql = require('mysql2');
+const { request } = require('express');
 
 const conn = mysql.createConnection({
   host: '34.123.145.94',
@@ -25,6 +26,38 @@ app.listen(3001, () => {
 /* GET home page. */
 app.get('/', (req, res) => {
   res.send("Demo Website for GroupBuy Application");
+});
+
+//GET Post Info
+app.get('/post/:id', (req, res) => {
+  const id = req.params.id
+  // console.log(req)
+  let sqlSearch = "SELECT * \
+                   FROM Post LEFT JOIN Product USING (postId) LEFT JOIN User USING(userId)\
+                   WHERE postId="+ id + ";";
+
+  conn.query(sqlSearch, (err, result) => {
+    console.log('result:', result,err,id)
+    res.send(result);
+  })
+});
+
+// GET Post's Group Info 
+app.get('/post/group/:id', (req, res) => {
+  const id = req.params.id
+  console.log('PostInfo')
+  let sql= "SELECT userName\
+            FROM UserPost up LEFT JOIN User USING (userId)\
+            WHERE up.postId=" + id + ";";
+  conn.query(sql, (err, result) => {
+    console.log('result:', result,err,id)
+    res.send(result);
+  })
+
+});
+
+app.listen(3001, () => {
+  console.log('Server started on port 3001...');
 });
 
 app.post('/post/insert', (req, res) => {

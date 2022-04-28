@@ -9,6 +9,7 @@ import Header from "./Header";
 import Home from "./Components/Page/Home"
 import UserAnalysis from "./Components/UserAnalysis"
 import "./App.css";
+import Post from './Components/Post';
 
 import { BrowserRouter as Router, Routes, Route}
 	from 'react-router-dom';
@@ -24,6 +25,7 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/Insert' element={<Insert />} />
+						<Route exact path='/Components/Post/:id' element={<Post />} />
 						<Route path='/Components/search' element={<SearchPost />} />
 						<Route path='/Components/Info' element={<Info />} />
 						<Route path='/Components/Update' element={<Update />} />
