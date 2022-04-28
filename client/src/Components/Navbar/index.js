@@ -2,6 +2,11 @@ import React from "react";
 import { Nav, NavLink, NavMenu }
 	from "./NavbarElements";
 
+function logout() {
+	window.localStorage.clear();
+	window.location.reload();
+}
+
 const Navbar = () => {
 	return (
 		<>
@@ -28,6 +33,11 @@ const Navbar = () => {
 					<NavLink to="/Components/UserAnalysis" activeStyle>
 						User Analysis
 					</NavLink>
+					<div className="Logout">
+						<div>
+							<button onClick={logout}>Logout</button>
+						</div>
+					</div>
 				</NavMenu>
 			</Nav>
 		</>
