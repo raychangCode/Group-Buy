@@ -7,7 +7,7 @@ import useToken from '../../useToken';
 const PostComponent = (props) => {
   const {id} = useParams()
   console.log(useParams())
-  
+
   //Post State
   const [state,setState] = useState({
 
@@ -20,7 +20,7 @@ const PostComponent = (props) => {
       setState(response.data?.[0])
     }).catch((err)=>{
       console.error(err)
-    })    
+    })
     },[id])
 
   //Group State
@@ -35,7 +35,7 @@ const PostComponent = (props) => {
       setGroupState(response.data?response.data:[])
     }).catch((err)=>{
       console.error(err)
-    })    
+    })
     },[id])
 
   const var_item = groupState?.map((item,index)=> {
@@ -45,14 +45,15 @@ const PostComponent = (props) => {
     })
     console.log(var_item)
 
- // Join function 
+ // Join function
  const join = () => {
-  console.log(token,id)
+  console.log(token)
+  console.log('----------------------')
   Axios.post("http://localhost:3001/post/join/", {userId: token.split(" ")[1], postId:id
   }).then((response)=>{
     console.log({response})
     if (typeof window==="undefine") return
-        window.location= "/Components/Post/" + id 
+        window.location= "/Components/Post/" + id
   }).catch((err)=>{
     console.error(err)
   })
@@ -63,10 +64,10 @@ const PostComponent = (props) => {
   // "http://localhost:3001/post/join/?postId=" + id + '&userId=' + token.split(" ")[1]
   const leave = () => {
     console.log(token,id)
-    Axios.delete("http://localhost:3001/post/leave/"+ id + '/' + token.split(" ")[1]).then((response)=>{
+    Axios.delete(`http://localhost:3001/post/leave/${id}/${token.split(" ")[1]}`).then((response)=>{
       console.log({response})
       if (typeof window==="undefine") return
-          window.location= "/Components/Post/" + id 
+          window.location= "/Components/Post/" + id
     }).catch((err)=>{
       console.error(err)
     })
@@ -99,7 +100,7 @@ const PostComponent = (props) => {
         </div>
       </div>
     )
- 
+
 }
 
 
