@@ -18,13 +18,13 @@ app.use(cors());
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.listen(3001, () => {
+  console.log('Server started on port 3001...');
+});
+
 /* GET home page. */
 app.get('/', (req, res) => {
   res.send("Demo Website for GroupBuy Application");
-});
-
-app.listen(3001, () => {
-  console.log('Server started on port 3001...');
 });
 
 app.post('/post/insert', (req, res) => {
@@ -123,6 +123,16 @@ app.post('/post/advsearch2', (req, res) => {
                     GROUP BY c.categoryId );";
   conn.query(sqlSearch, (err, result) => {
     // console.log(result)
+    res.send(result);
+  })
+
+});
+
+app.get('/post/advsearch3', (req, res) => {
+  console.log('adv query store procedure')
+  let sqlProcedure = 'CALL AnalyzeUser()';
+  conn.query(sqlProcedure, (err, result) => {
+    console.log(result[0][0])
     res.send(result);
   })
 

@@ -1,0 +1,20 @@
+.card-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: .25rem;
+	margin-top: 1rem;
+}
+
+.card2 {
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	width: 300px;
+	height: 180px;
+	border: 2px solid black;
+	border-radius: 15px;
+	margin: 5px;
+	text-align: center;
+}
+
+.search-wrap {
+	text-align: center;
+}
