@@ -143,17 +143,25 @@ app.use('/login', (req, res) => {
 
 });
 
-// register function, need to put sql trigger later
+// register function
 app.post('/post/register', (req, res) => {
   console.log('this is register')
   const username = req.body.regusername
   const password = req.body.regpassword
   const email = req.body.email
   const phoneNumber = req.body.phoneNumber
-
   let sqlInsert = 'INSERT INTO User (username, password, email, phoneNumber) VALUE(?,?,?,?);';
   conn.query(sqlInsert, [username, password, email, phoneNumber], (err, result) => {
-    res.send(result)
+    if (err) {
+      res.send(err.sqlState)
+      console.log('error code:', err.sqlState)
+      console.log(err.sqlMessage)
+    }
+    else {
+      console.log(result)
+      res.send(result)
+    }
+
   })
 
 });

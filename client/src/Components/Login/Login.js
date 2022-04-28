@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './Login.css';
 
 async function loginUser(credentials) {
-    console.log(credentials)
     return fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
@@ -15,8 +14,6 @@ async function loginUser(credentials) {
 }
 
 async function regUser(credentials) {
-    console.log(credentials)
-    document.getElementById('register').style.visibility = 'hidden';
     return fetch('http://localhost:3001/post/register', {
         method: 'POST',
         headers: {
@@ -24,7 +21,7 @@ async function regUser(credentials) {
         },
         body: JSON.stringify(credentials)
     })
-        .then(data => data.json())
+        .then(data => data.json());
 }
 
 export default function Login({ setToken }) {
@@ -54,6 +51,14 @@ export default function Login({ setToken }) {
             email,
             phoneNumber
         });
+        if (token === 45000) {
+            alert('This username is already being used, please try another username.')
+        }
+        else {
+            alert('Welcome to Group Buy')
+            document.getElementById('register').style.visibility = 'hidden';
+
+        }
     }
 
     return (
