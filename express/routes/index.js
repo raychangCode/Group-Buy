@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var app = express()
 var mysql = require('mysql2');
-const { request } = require('express');
+// const { request } = require('express');
 
 const conn = mysql.createConnection({
   host: '34.123.145.94',
@@ -42,7 +42,7 @@ app.get('/post/:id', (req, res) => {
   })
 });
 
-// GET Post's Group Info 
+// GET Post's Group Info
 app.get('/post/group/:id', (req, res) => {
   const id = req.params.id
   console.log('PostInfo')
@@ -53,11 +53,6 @@ app.get('/post/group/:id', (req, res) => {
     console.log('result:', result,err,id)
     res.send(result);
   })
-
-});
-
-app.listen(3001, () => {
-  console.log('Server started on port 3001...');
 });
 
 app.post('/post/insert', (req, res) => {
