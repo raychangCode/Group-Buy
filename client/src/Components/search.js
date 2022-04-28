@@ -34,7 +34,7 @@ function SearchPost() {
   };
 
   return (
-    <div className="Post">
+    <div className="SearchPost">
       <br></br>
       <div class="search-wrap">
         <input placeholder="Search product name"
