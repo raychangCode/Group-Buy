@@ -191,7 +191,7 @@ app.post('/post/advsearch2', (req, res) => {
                     WHERE p.userId < 200 AND  c.categoryName='Bakery'\
                     GROUP BY c.categoryId );";
   conn.query(sqlSearch, (err, result) => {
-    // console.log(result)
+    console.log(result)
     res.send(result);
   })
 
