@@ -156,7 +156,7 @@ app.post('/post/advsearch2', (req, res) => {
 
 });
 
-app.get('/post/advsearch3', (req, res) => {
+app.get('/get/advsearch3', (req, res) => {
   console.log('adv query store procedure')
   let sqlProcedure = 'CALL AnalyzeUser()';
   conn.query(sqlProcedure, (err, result) => {
