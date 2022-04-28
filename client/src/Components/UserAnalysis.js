@@ -9,7 +9,7 @@ function UserAnalysis(){
 	const [userEngagement, setuserEngagement] = useState("");
 
 	const UserAnalysisResult = async () => {
-		const response = await Axios.get("http://localhost:3001/post/advsearch3", {
+		const response = await Axios.get("http://localhost:3001/get/advsearch3", {
 			userId: userId,
 			MostFreCategory: MostFreCategory,
 			userEngagement: userEngagement
