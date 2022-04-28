@@ -137,6 +137,7 @@ app.use('/login', (req, res) => {
       });
     }
     else {
+      res.send({ token: 'err' })
       console.log('Something wrong with login credentials')
     }
   })

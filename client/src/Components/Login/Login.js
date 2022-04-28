@@ -40,7 +40,13 @@ export default function Login({ setToken }) {
             username,
             password
         });
-        setToken(token);
+        console.log(token)
+        if (token.token === 'err') {
+            alert('Something wrong with login credentials')
+        } else {
+            setToken(token);
+        }
+
     }
 
     const reg = async e => {
