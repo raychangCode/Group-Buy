@@ -7,7 +7,7 @@ import video from '../assets/video-2.mp4';
 const Video = () => {
 	return (
   		<div className='hero'>
-			<video autoPlay loop id='video'>
+			<video autoPlay loop muted id='video'>
 				<source src={video} type='video/mp4' />
 			</video>
 			<div className='content'>
