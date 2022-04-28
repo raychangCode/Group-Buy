@@ -129,11 +129,12 @@ app.post('/post/search-user', (req, res) => {
 app.use('/login', (req, res) => {
   const authUser = req.body.username
   const authpw = req.body.password
-  let sqlSearch = "SELECT password FROM User WHERE userName = '" + authUser + "'";
+  let sqlSearch = "SELECT userId, password FROM User WHERE userName = '" + authUser + "'";
   conn.query(sqlSearch, (err, result) => {
     if (result[0].password === authpw) {
       res.send({
-        token: 'test123'
+        // token: 'test123'
+        token: `test123 ${result[0].userId}`
       });
     }
     else {
@@ -141,7 +142,30 @@ app.use('/login', (req, res) => {
       console.log('Something wrong with login credentials')
     }
   })
+});
 
+//join post
+app.post('/post/join', (req, res) => {
+  const userId = req.body.userId
+  const postId = req.body.postId
+
+  let sqlJoinPost = 'INSERT INTO  UserPost (userId, postId) VALUE(?,?);';
+  conn.query(sqlJoinPost, [userId, postId], (err, result) => {
+    res.send(err ? err.message:"Success")
+    console.log(err);
+  })
+});
+
+//leave post
+app.get('/post/leave/:postId/:userId', (req, res) => {
+  const postId = req.params.postId
+  const userId = req.params.userId
+
+  let sqlLeavePost = 'DELETE FROM UserPost WHERE userId = ? AND postId = ?;';
+  conn.query(sqlLeavePost, [userId, postId], (err, result) => {
+    res.send(err ? err.message:"Delete Successfully")
+    console.log(err);
+  })
 });
 
 // register function
