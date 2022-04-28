@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var app = express()
 var mysql = require('mysql2');
-const { request } = require('express');
+// const { request } = require('express');
 
 const conn = mysql.createConnection({
   host: '34.123.145.94',
@@ -18,6 +18,10 @@ conn.connect();
 app.use(cors());
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.listen(3001, () => {
+  console.log('Server started on port 3001...');
+});
 
 /* GET home page. */
 app.get('/', (req, res) => {
@@ -33,53 +37,23 @@ app.get('/post/:id', (req, res) => {
                    WHERE postId="+ id + ";";
 
   conn.query(sqlSearch, (err, result) => {
-    console.log('result:', result,err,id)
+    console.log('result:', result, err, id)
     res.send(result);
   })
 });
 
-// GET Post's Group Info 
+// GET Post's Group Info
 app.get('/post/group/:id', (req, res) => {
   const id = req.params.id
   console.log('PostInfo')
-  let sql= "SELECT userName\
+  let sql = "SELECT userName\
             FROM UserPost up LEFT JOIN User USING (userId)\
             WHERE up.postId=" + id + ";";
   conn.query(sql, (err, result) => {
-    console.log('result:', result,err,id)
+    console.log('result:', result, err, id)
     res.send(result);
   })
-
 });
-
-app.listen(3001, () => {
-  console.log('Server started on port 3001...');
-});
-
-//join post
-app.post('/post/join', (req, res) => {
-  const postId = req.body.postId
-  const userId = req.body.userId
-
-  let sqlJoinPost = 'INSERT INTO  UserPost (userId, postId) VALUE(?,?);';
-  conn.query(sqlJoinPost, [userId, postId], (err, result) => {
-    res.send(err ? err.message:"Success")
-    console.log(err);
-  })
-});
-
-//leave post
-app.get('/post/leave/:postId/:userId', (req, res) => {
-  const postId = req.params.postId
-  const userId = req.params.userId
-  
-  let sqlLeavePost = 'DELETE FROM UserPost WHERE userId = ? AND postId = ?;';
-  conn.query(sqlLeavePost, [userId, postId], (err, result) => {
-    res.send(err ? err.message:"Delete Successfully")
-    console.log(err);
-  })
-});
-
 
 app.post('/post/insert', (req, res) => {
 
@@ -155,11 +129,11 @@ app.post('/post/search-user', (req, res) => {
 app.use('/login', (req, res) => {
   const authUser = req.body.username
   const authpw = req.body.password
-  let sqlSearch = "SELECT userId, password FROM User WHERE userName = '" + authUser + "'";
+  let sqlSearch = "SELECT password FROM User WHERE userName = '" + authUser + "'";
   conn.query(sqlSearch, (err, result) => {
     if (result[0].password === authpw) {
       res.send({
-        token: `test123 ${result[0].userId}`
+        token: 'test123'
       });
     }
     else {
@@ -223,37 +197,15 @@ app.post('/post/advsearch2', (req, res) => {
 
 });
 
+app.get('/get/advsearch3', (req, res) => {
+  console.log('adv query store procedure')
+  let sqlProcedure = 'CALL AnalyzeUser()';
+  conn.query(sqlProcedure, (err, result) => {
+    console.log(result[0][0])
+    res.send(result);
+  })
 
-
-//GET Post Info 
-// app.post('/post/info/:id', (req, res) => {
-//   console.log('PostInfo')
-//   let sql= "SELECT userId, up.postId, productId\
-//             FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Post USING (postId)\
-//             WHERE up.postId = id; "
-//   conn.query(sql, (err, result) => {
-//     res.send(result);
-//   })
-
-// });
-
-
-//GET Post's product information
-// app.get('/post/product/:id', (req, res) => {
-//   console.log('PostProductInfo')
-//   let sql= "SELECT userId, up.postId, productId, productName\
-//             FROM UserPost up LEFT JOIN UserProduct USING (userId) LEFT JOIN Product USING (productId)\
-//             WHERE up.postId = id; "
-//   conn.query(sql, (err, result) => {
-//     res.send(result);
-//   })
-
-// });
-
-
-
-            
-
+});
 
 app.delete('/post/delete/:id', (req, res) => {
   const deleteId = req.params.id
@@ -268,4 +220,3 @@ app.delete('/post/delete/:id', (req, res) => {
 });
 
 module.exports = router;
-
