@@ -7,6 +7,7 @@ import Analysis from './Components/Analysis';
 import Navbar from './Components/Navbar';
 import Header from "./Header";
 import Home from "./Components/Page/Home"
+import UserAnalysis from "./Components/UserAnalysis"
 import "./App.css";
 
 import { BrowserRouter as Router, Routes, Route}
@@ -27,6 +28,7 @@ function App() {
 						<Route path='/Components/Info' element={<Info />} />
 						<Route path='/Components/Update' element={<Update />} />
 						<Route path='/Components/Analysis' element={<Analysis />} />
+						<Route path='/Components/UserAnalysis' element={<UserAnalysis />} />
 					</Routes>
 
 				</div>

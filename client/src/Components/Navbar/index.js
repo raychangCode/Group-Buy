@@ -25,6 +25,9 @@ const Navbar = () => {
 					<NavLink to="/Components/Analysis" activeStyle>
 						Analysis
 					</NavLink>
+					<NavLink to="/Components/UserAnalysis" activeStyle>
+						User Analysis
+					</NavLink>
 				</NavMenu>
 			</Nav>
 		</>
