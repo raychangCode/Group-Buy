@@ -42,15 +42,13 @@ BEGIN
             
 		SELECT categoryName
 		INTO varMostFreCategory
-		FROM (
-			SELECT userId, categoryId, categoryName, ct_category, 
-			RANK() OVER (PARTITION BY userId ORDER BY ct_category DESC) AS rnk
-			FROM (
-				SELECT userId, categoryId,categoryName, COUNT(categoryId) AS ct_category 
-				FROM Post NATURAL JOIN Category
-				GROUP BY userId, categoryId
-				HAVING userId = varUserId
-				ORDER BY userId, count(categoryId) DESC) temp) x
+		FROM (SELECT userId, categoryId, categoryName, ct_category, 
+		      RANK() OVER (PARTITION BY userId ORDER BY ct_category DESC) AS rnk
+		      FROM (SELECT userId, categoryId,categoryName, COUNT(categoryId) AS ct_category 
+			    FROM Post NATURAL JOIN Category
+			    GROUP BY userId, categoryId
+			    HAVING userId = varUserId
+			    ORDER BY userId, count(categoryId) DESC) temp) x
 		WHERE x.rnk = 1
 		LIMIT 1 ;
             
