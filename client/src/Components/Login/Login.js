@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
+import Header from "../../Header";
 
 async function loginUser(credentials) {
     return fetch('http://localhost:3001/login', {
@@ -69,6 +70,9 @@ export default function Login({ setToken }) {
 
     return (
         <div className="login-wrapper">
+            <div>
+                <Header />
+            </div>
             <div className="login" id='login'>
                 <h1>Please Log In</h1>
                 <form onSubmit={handleSubmit}>
