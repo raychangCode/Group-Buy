@@ -2,6 +2,8 @@ import React from "react";
 import useToken from '../../useToken';
 import { Nav, NavLink, NavMenu }
 	from "./NavbarElements";
+import "./nav.css";
+
 
 function logout() {
 	window.localStorage.clear();
@@ -36,14 +38,17 @@ const Navbar = () => {
 					<NavLink to="/Components/UserAnalysis" activeStyle>
 						User Analysis
 					</NavLink>
-					<div className="Logout">
-						<div>
-							<button onClick={logout}>Logout</button>
-						</div>
+
+					<div class='userid'>
+						User ID: {token.split(" ")[1]}
 					</div>
-					<div>
-						User Id: {token.split(" ")[1]}
-					</div>
+
+
+					<button class='btn' onClick={logout}>Logout</button>
+
+
+
+
 				</NavMenu>
 			</Nav>
 		</>
