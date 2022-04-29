@@ -61,7 +61,6 @@ function SearchPost() {
                 <h5>Payment Method: {val.paymentMethod}</h5>
                 <h5>Group Limit: {val.groupLimit}</h5>
                 <h5>Expiration Date: {val.expirationDate}</h5>
-                {/* <button onClick={() => {deletePost(val.postId)}}>Delete</button> */}
               </div>
             );
           })}

@@ -75,8 +75,12 @@ app.post('/post/insert', (req, res) => {
   let sqlGetPostId = 'SELECT postId FROM Post WHERE userId = ' + userId + ' ORDER BY postId DESC LIMIT 1;';
   conn.query(sqlGetPostId, (err, result) => {
     let postIdRes = result;
-    // console.log('----------------------------')
-    // console.log(postIdRes);
+
+    let sqlInertInitiator = "INSERT INTO UserPost (userId, postId) VALUE(?," + postIdRes[0].postId + ");";
+    conn.query(sqlInertInitiator, [userId], (err, result) => {
+      console.log(err);
+    })
+
     let sqlInsertProduct = "INSERT INTO Product (productName, storeName, price, link, postId) VALUE(?,?,?,?," + postIdRes[0].postId + ");";
     conn.query(sqlInsertProduct, [productName, storeName, price, link], (err, result) => {
       console.log(err);
@@ -157,7 +161,7 @@ app.post('/post/join', (req, res) => {
 });
 
 //leave post
-app.get('/post/leave/:postId/:userId', (req, res) => {
+app.delete('/post/leave/:postId/:userId', (req, res) => {
   const postId = req.params.postId
   const userId = req.params.userId
 

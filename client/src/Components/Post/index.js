@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 import useToken from '../../useToken';
 
 const PostComponent = (props) => {
+  //post ID
   const {id} = useParams()
-  console.log(useParams())
+  const { token, setToken } = useToken();
 
   //Post State
   const [state,setState] = useState({
@@ -26,7 +27,7 @@ const PostComponent = (props) => {
   //Group State
   const [groupState, setGroupState] = useState([])
   console.log(groupState)
-  const { token, setToken } = useToken();
+
   useEffect(()=> {
       if (id)
       Axios.get("http://localhost:3001/post/group/" + id, {
@@ -63,7 +64,7 @@ const PostComponent = (props) => {
  //Leave Function
   // "http://localhost:3001/post/join/?postId=" + id + '&userId=' + token.split(" ")[1]
   const leave = () => {
-    console.log(token,id)
+    console.log(id, token)
     Axios.delete(`http://localhost:3001/post/leave/${id}/${token.split(" ")[1]}`).then((response)=>{
       console.log({response})
       if (typeof window==="undefine") return
@@ -78,10 +79,11 @@ const PostComponent = (props) => {
       <h1>{`${state.storeName} ${state.productName}`}</h1>
         <div>
           <h3>Initiator: {state.userName}</h3>
+          <h3>Phone Number: {state.phoneNumber}</h3>
           <h3>Price: {state.price}</h3>
           <h3>Payment:{state.paymentMethod} </h3>
           <h3>Group Limit: {state.groupLimit} </h3>
-          <h3>Link: {state.link} </h3>
+          <h3>Link: <a href={state.link} target="_blank" rel="noopener noreferrer"> Click me!</a></h3>
         </div>
         <div>
           <h3>Current Group Member</h3>
@@ -95,12 +97,10 @@ const PostComponent = (props) => {
         </div>
         <div>
           <button onClick = {join} >Join Group</button>
-          {/* <button>Update</button> */}
           <button onClick = {leave}>Leave Group</button>
         </div>
       </div>
-    )
-
+  )
 }
 
 

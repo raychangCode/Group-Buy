@@ -1,4 +1,5 @@
 import React from "react";
+import useToken from '../../useToken';
 import { Nav, NavLink, NavMenu }
 	from "./NavbarElements";
 
@@ -8,6 +9,8 @@ function logout() {
 }
 
 const Navbar = () => {
+	const { token, setToken } = useToken();
+
 	return (
 		<>
 			<Nav>
@@ -37,6 +40,9 @@ const Navbar = () => {
 						<div>
 							<button onClick={logout}>Logout</button>
 						</div>
+					</div>
+					<div>
+						User Id: {token.split(" ")[1]}
 					</div>
 				</NavMenu>
 			</Nav>
