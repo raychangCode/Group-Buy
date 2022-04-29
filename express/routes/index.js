@@ -135,7 +135,12 @@ app.use('/login', (req, res) => {
   const authpw = req.body.password
   let sqlSearch = "SELECT userId, password FROM User WHERE userName = '" + authUser + "'";
   conn.query(sqlSearch, (err, result) => {
-    if (result[0].password === authpw) {
+    console.log(result)
+    if (result.length == 0) {
+      res.send({ token: 'err' })
+      console.log('Something wrong with login credentials')
+    }
+    else if (result[0].password === authpw) {
       res.send({
         // token: 'test123'
         token: `test123 ${result[0].userId}`
@@ -155,7 +160,7 @@ app.post('/post/join', (req, res) => {
 
   let sqlJoinPost = 'INSERT INTO  UserPost (userId, postId) VALUE(?,?);';
   conn.query(sqlJoinPost, [userId, postId], (err, result) => {
-    res.send(err ? err.message:"Success")
+    res.send(err ? err.message : "Success")
     console.log(err);
   })
 });
@@ -167,7 +172,7 @@ app.delete('/post/leave/:postId/:userId', (req, res) => {
 
   let sqlLeavePost = 'DELETE FROM UserPost WHERE userId = ? AND postId = ?;';
   conn.query(sqlLeavePost, [userId, postId], (err, result) => {
-    res.send(err ? err.message:"Delete Successfully")
+    res.send(err ? err.message : "Delete Successfully")
     console.log(err);
   })
 });
