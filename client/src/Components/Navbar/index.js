@@ -44,7 +44,7 @@ const Navbar = () => {
 					</div>
 
 
-					<button class='btn' onClick={logout}>Logout</button>
+					<button class='btn3' onClick={logout}>Logout</button>
 
 
 
