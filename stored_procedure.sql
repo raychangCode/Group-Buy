@@ -1,4 +1,5 @@
-CREATE DEFINER=`root`@`%` PROCEDURE `AnalyzeUser`()
+DELIMITER $$
+CREATE PROCEDURE AnalyzeUser()
 BEGIN
 		DECLARE varUserId INT;
 		DECLARE varTotalPostNum INT;
@@ -62,4 +63,7 @@ BEGIN
 		SELECT *
         FROM AnalyzedTable
         ORDER BY userId;
-END
+END$$
+DELIMITER ;
+
+-- DROP PROCEDURE AnalyzeUser;
