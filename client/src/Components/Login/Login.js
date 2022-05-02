@@ -46,6 +46,7 @@ export default function Login({ setToken }) {
             alert('Something wrong with login credentials')
         } else {
             setToken(token);
+            window.location.href = "http://localhost:3002"
         }
 
     }

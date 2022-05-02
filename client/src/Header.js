@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import image from './assets/favicon-PhotoRoom.png'
 
 
 function Header() {
@@ -7,7 +8,7 @@ function Header() {
     <div className="header__logo">
       <img
         className="header__logo"
-        src="https://img.onl/BTqVt9"
+        src={image}
         alt=""
       />
     </div>
