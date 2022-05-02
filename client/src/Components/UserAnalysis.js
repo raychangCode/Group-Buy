@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Axios from 'axios';
 import './UserAnalysisStyle.css';
 
-function UserAnalysis(){
+function UserAnalysis() {
 	const [analysisList, setList] = useState([]);
 	const [userId, setUserId] = useState("");
 	const [MostFreCategory, setMostFreCategory] = useState("");
@@ -22,7 +22,7 @@ function UserAnalysis(){
 	return (
 		<div className="UserAnalysis">
 			<div>
-				<label>User Analysis: </label>
+				<h1>User Analysis: </h1>
 				<button onClick={UserAnalysisResult}>Analyze</button>
 			</div>
 

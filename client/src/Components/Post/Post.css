@@ -1,5 +1,5 @@
-
 .card3 {
+	color: white;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen';
 	width: 500px;
 	height: 600px;
@@ -8,4 +8,3 @@
 	margin: 5px;
 	text-align: left;
 }
-

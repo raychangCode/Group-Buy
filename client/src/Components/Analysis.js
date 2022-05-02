@@ -39,36 +39,41 @@ function Analysis() {
   return (
     <div className="Analysis">
       <div>
-        <label>Top 15 users with most amount of Posts: </label>
+        <h1>Top 15 users with most amount of Posts: </h1>
         <button onClick={AdvSearch1}>Search</button>
       </div>
 
       <div>
-        <label>Number of posts in Meat category with userID greater than 800 and Bakery category with userID less than 200 : </label>
+        <h1>Number of posts in Meat category with userID greater than 800 and Bakery category with userID less than 200 : </h1>
         <button onClick={AdvSearch2}>Search</button>
       </div>
 
       <div className="PostListSearch" id="adv1">
-        {searchPostList1.map((val) => {
-          return (
-            <div className="card">
-              <h1>User ID: {val.userId}</h1>
-              <h1>User name: {val.userName}</h1>
-              <h1>Number of Post: {val.numOfPost}</h1>
-            </div>
-          );
-        })}
+        <div class="card-container">
+          {searchPostList1.map((val) => {
+            return (
+
+              <div className="card">
+                <h1>User ID: {val.userId}</h1>
+                <h1>User name: {val.userName}</h1>
+                <h1>Number of Post: {val.numOfPost}</h1>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className="PostListAdv1" id='adv2'>
-        {searchPostList2.map((val) => {
-          return (
-            <div className="card">
-              <h1>categoryId: {val.categoryId}</h1>
-              <h1>categoryName: {val.categoryName}</h1>
-              <h1>NumberOfPost: {val.NumberOfPost}</h1>
-            </div>
-          );
-        })}
+        <div class="card-container">
+          {searchPostList2.map((val) => {
+            return (
+              <div className="card">
+                <h1>categoryId: {val.categoryId}</h1>
+                <h1>categoryName: {val.categoryName}</h1>
+                <h1>NumberOfPost: {val.NumberOfPost}</h1>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   )

@@ -3,6 +3,10 @@ a:visited {
 	color: #f05636;
 }
 
+.footer p {
+	text-align: center;
+}
+
 .page-container {
 	position: relative;
 	min-height: 100%;

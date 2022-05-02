@@ -63,57 +63,48 @@ export default function Login({ setToken }) {
         }
         else {
             alert('Welcome to Group Buy')
-            document.getElementById('register').style.visibility = 'hidden';
-
+            window.location.reload();
         }
     }
 
     return (
-        <div className="login-wrapper">
-            <div>
+        <div class="login-wrapper">
+            <div class="main">
                 <Header />
-            </div>
-            <div className="login" id='login'>
-                <h1>Please Log In</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        <p>Username</p>
-                        <input required type="text" onChange={e => setUserName(e.target.value)} />
-                    </label>
-                    <label>
-                        <p>Password</p>
-                        <input required type="password" onChange={e => setPassword(e.target.value)} />
-                    </label>
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
+                <input type="checkbox" id="chk" aria-hidden="true"></input>
+                <div class='signup' >
+                    <label for="chk" aria-hidden="true">Sign up</label>
+                    <form onSubmit={reg}>
 
-            <div className="register" id='register' >
-                <h1>Please Sign Up</h1>
-                <form onSubmit={reg}>
-                    <label>
-                        <p>Username</p>
-                        <input required type="text" onChange={e => setregUserName(e.target.value)} />
-                    </label>
-                    <label>
-                        <p>Password</p>
-                        <input required type="password" onChange={e => setregPassword(e.target.value)} />
-                    </label>
-                    <label>
-                        <p>Email</p>
-                        <input required type="email" onChange={e => setEmail(e.target.value)} />
-                    </label>
-                    <label>
-                        <p>Phone Number</p>
-                        <input required type="number" onChange={e => setphoneNumber(e.target.value)} />
-                    </label>
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-                {/* <p><a href="./Register.js">Click to Register</a></p> */}
+                        <input required type="text" placeholder="User name" onChange={e => setregUserName(e.target.value)} />
+
+                        <input required type="password" placeholder="Password" onChange={e => setregPassword(e.target.value)} />
+
+                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+
+                        <input required type="number" placeholder="Phone Number" onChange={e => setphoneNumber(e.target.value)} />
+
+                        <div>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                    {/* <p><a href="./Register.js">Click to Register</a></p> */}
+                </div>
+                <div class="login">
+                    <label for="chk" aria-hidden="true">Login</label>
+                    <form onSubmit={handleSubmit}>
+
+                        <input required type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />
+
+                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+
+                        <div>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+
             </div>
         </div>
     )
