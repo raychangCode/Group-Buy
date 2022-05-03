@@ -75,12 +75,14 @@ function Insert() {
             setPaymentMethod(e.target.value)
           }}
           />
-
-          {/* Category ID */}
           <label>Category Id:</label>
+          <label>1.Drink 2.Meat 3.Grocery 4.Seafood</label>
+          <label>5.Fruit 6.Snack 7.Vegetable 8.Bakery</label>
           <input
           type = "number"
           name = "categoryId"
+          min = "1"
+          max = "8"
           onChange={(e) => {
             setCategoryId(e.target.value)
           }}

@@ -33,11 +33,6 @@ function SearchPost() {
     }
   };
 
-  // const deletePost = (id) => {
-  //   Axios.delete(`http://localhost:3001/post/delete/${id}`);
-  //   window.location.reload();
-  // };
-
   return (
     <div className="SearchPost">
       <br></br>
@@ -56,16 +51,16 @@ function SearchPost() {
 
         <div class="card-container">
           {searchPostList.map((val) => {
+            console.log(val)
             return (
               <div className="card2">
                 <h5>Product name: {val.productName}</h5>
                 <h5>Store Name: {val.storeName}</h5>
                 <h5>Price: {val.price}</h5>
-                <h5>Link: <a href={val.link} target="_blank" rel="noopener noreferrer"> Click me!</a></h5>
+                <h5>Link: <a href={`/Components/Post/${val.postId}`} target="_blank" rel="noopener noreferrer"> Click me!</a></h5>
                 <h5>Payment Method: {val.paymentMethod}</h5>
                 <h5>Group Limit: {val.groupLimit}</h5>
                 <h5>Expiration Date: {val.expirationDate}</h5>
-                {/* <button onClick={() => {deletePost(val.postId)}}>Delete</button> */}
               </div>
             );
           })}
